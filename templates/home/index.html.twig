@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <h1>Hello {{ user.email }}</h1>
+    <p>Welcome to your dashboard, {{ user.email }}!</p>
+    <a href="{{ path('app_logout') }}">Logout</a>
+    <a href="{{ path('app_logoutUser') }}">Create a new project</a>
+{% endblock %}
