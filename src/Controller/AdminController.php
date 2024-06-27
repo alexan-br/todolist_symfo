@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 // use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
+#[Route('/admin/users', name: 'admin_user_')]
 class AdminController extends AbstractController
 {
-    #[Route('/admin/users', name: 'admin_user_list')]
+    #[Route('/', name: 'list')]
     #[IsGranted('ROLE_ADMIN')]
     public function userList(EntityManagerInterface $entityManager): Response
     {
@@ -26,7 +26,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/users/edit/{id}', name: 'admin_user_edit')]
+    #[Route('/edit/{id}', name: 'edit')]
     #[IsGranted('ROLE_ADMIN')]
     public function editUser(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -44,7 +44,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/users/delete/{id}', name: 'admin_user_delete')]
+    #[Route('/delete/{id}', name: 'delete')]
     #[IsGranted('ROLE_ADMIN')]
     public function deleteUser(User $user, EntityManagerInterface $entityManager): Response
     {
