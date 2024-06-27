@@ -7,4 +7,7 @@
     <p>Welcome to your dashboard, {{ user.email }}!</p>
     <a href="{{ path('app_logout') }}">Logout</a>
     <a href="{{ path('app_dashboard') }}">Dashboard</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_user_list') }}">User List</a>
+    {% endif %}
 {% endblock %}

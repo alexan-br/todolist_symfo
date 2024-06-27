@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Edit User</h1>
+    {{ form_start(userForm) }}
+        {{ form_widget(userForm) }}
+        <button type="submit">Save</button>
+    {{ form_end(userForm) }}
+    <a href="{{ path('admin_user_list') }}">Cancel</a>
+
+{% endblock %}
