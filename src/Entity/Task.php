@@ -31,6 +31,9 @@ class Task
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'tasks')]
     private Collection $categories;
 
+    #[ORM\Column(length: 128)]
+    private ?string $status = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -100,6 +103,18 @@ class Task
         if ($this->categories->removeElement($category)) {
             $category->removeTask($this);
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

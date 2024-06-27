@@ -1,0 +1,29 @@
+{# templates/project/view.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet: {{ project.name }}{% endblock %}
+
+{% block body %}
+<h1>{{ project.name }}</h1>
+
+<h2>Tâches</h2>
+<ul>
+    {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong> - {{ task.status|trans }}
+            <p>{{ task.description }}</p>
+        </li>
+    {% else %}
+        <li>Aucune tâche pour ce projet.</li>
+    {% endfor %}
+</ul>
+
+<h2>Ajouter une Nouvelle Tâche</h2>
+{{ form_start(taskForm) }}
+    {{ form_row(taskForm.title) }}
+    {{ form_row(taskForm.description) }}
+    {{ form_row(taskForm.status) }}
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+{{ form_end(taskForm) }}
+{% endblock %}
