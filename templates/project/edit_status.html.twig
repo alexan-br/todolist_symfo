@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le statut de la tâche{% endblock %}
+
+{% block body %}
+<h1>Modifier le statut de la tâche</h1>
+
+{{ form_start(statusForm) }}
+    {{ form_row(statusForm.status) }}
+    <button type="submit" class="btn btn-primary">Modifier</button>
+{{ form_end(statusForm) }}
+
+<a href="{{ path('app_project_view', { 'id': task.project.id }) }}" class="btn btn-secondary">Retour au projet</a>
+{% endblock %}

@@ -1,5 +1,3 @@
-{# templates/project/view.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Projet: {{ project.name }}{% endblock %}
@@ -13,6 +11,8 @@
         <li>
             <strong>{{ task.title }}</strong> - {{ task.status|trans }}
             <p>{{ task.description }}</p>
+            <a href="{{ path('app_task_edit_status', { 'id': task.id }) }}" class="btn btn-secondary">Modifier le statut</a>
+            <a href="{{ path('app_task_delete', { 'id': task.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');">Supprimer</a>
         </li>
     {% else %}
         <li>Aucune tâche pour ce projet.</li>

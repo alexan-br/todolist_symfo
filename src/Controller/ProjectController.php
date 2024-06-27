@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Task;
 use App\Form\ProjectType;
 use App\Form\TaskType;
+use App\Form\TaskStatusType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,5 +104,35 @@ class ProjectController extends AbstractController
             'tasks' => $project->getTasks(), // Supposant que vous avez une relation bidirectionnelle
             'taskForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/project/{id}/task/edit-status', name: 'app_task_edit_status')]
+    public function editTaskStatus(Task $task, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(TaskStatusType::class, $task);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_project_view', ['id' => $task->getProject()->getId()]);
+        }
+
+        return $this->render('project/edit_status.html.twig', [
+            'task' => $task,
+            'statusForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/project/{id}/task/delete', name: 'app_task_delete')]
+    public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
+    {
+        $projectId = $task->getProject()->getId();
+
+        $entityManager->remove($task);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_project_view', ['id' => $projectId]);
     }
 }
