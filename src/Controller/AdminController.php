@@ -28,13 +28,8 @@ class AdminController extends AbstractController
 
     #[Route('/admin/users/edit/{id}', name: 'admin_user_edit')]
     #[IsGranted('ROLE_ADMIN')]
-    public function editUser(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    public function editUser(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $user = $entityManager->getRepository(User::class)->find($id);
-        if (!$user) {
-            throw $this->createNotFoundException('User not found');
-        }
-
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -51,13 +46,8 @@ class AdminController extends AbstractController
 
     #[Route('/admin/users/delete/{id}', name: 'admin_user_delete')]
     #[IsGranted('ROLE_ADMIN')]
-    public function deleteUser(int $id, EntityManagerInterface $entityManager): Response
+    public function deleteUser(User $user, EntityManagerInterface $entityManager): Response
     {
-        $user = $entityManager->getRepository(User::class)->find($id);
-        if (!$user) {
-            throw $this->createNotFoundException('User not found');
-        }
-
         $entityManager->remove($user);
         $entityManager->flush();
 
